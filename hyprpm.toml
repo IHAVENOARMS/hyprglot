@@ -1,0 +1,10 @@
+[repository]
+name = "hyprglot"
+authors = ["Jimmy (Yousef)"]
+
+
+[hyprglot]
+description = "A plugin that facilitates managing multiple keyboard languages in hyprland"
+authors = ["Jimmy (Yousef)"]
+output = "hyprglot.so"
+build = ["make all"]
