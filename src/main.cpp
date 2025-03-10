@@ -3,6 +3,10 @@
 #include <hyprland/src/SharedDefs.hpp>
 #include <hyprland/src/plugins/PluginAPI.hpp>
 
+APICALL EXPORT std::string PLUGIN_API_VERSION() {
+    return HYPRLAND_API_VERSION;
+}
+
 APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
     PHANDLE     = handle;
     globalState = {};
