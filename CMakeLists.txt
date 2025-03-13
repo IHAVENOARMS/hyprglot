@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27)
 
 project(hyprglot
   LANGUAGES CXX
-  DESCRIPTION "A plugin that facilitates managing multiple keyboard languages in hyprland"
+  DESCRIPTION "A plugin that facilitates managing multiple keyboard layouts in hyprland"
   VERSION 0.1
 )
 

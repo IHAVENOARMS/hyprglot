@@ -4,7 +4,7 @@ authors = ["Jimmy (Yousef)"]
 
 
 [hyprglot]
-description = "A plugin that facilitates managing multiple keyboard languages in hyprland"
+description = "A plugin that facilitates managing multiple keyboard layouts in hyprland"
 authors = ["Jimmy (Yousef)"]
 output = "hyprglot.so"
 build = ["make all"]

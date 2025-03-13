@@ -71,7 +71,7 @@ void onActiveLayout(std::vector<std::any> args) {
     globalState[PACTIVEWINDOW->m_szTitle] = ACTIVELAYOUT;
 }
 
-static SDispatchResult switchLanguageDispatcher(std::string args) {
+static SDispatchResult switchLayoutDispatcher(std::string args) {
     const auto ACTIVEKEYBOARD = getActiveKeyboard();
     if (!ACTIVEKEYBOARD.has_value())
         return SDispatchResult{.success = false, .error = "Failed to find active keyboard"};
@@ -106,9 +106,9 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
     static auto p2 = HyprlandAPI::registerCallbackDynamic(PHANDLE, "activeLayout",
                                                           [&](void* self, SCallbackInfo& info, std::any data) { onActiveLayout(std::any_cast<std::vector<std::any>>(data)); });
 
-    auto        success = HyprlandAPI::addDispatcherV2(PHANDLE, "plugin:hyprglot:switchlanguage", switchLanguageDispatcher);
+    auto        success = HyprlandAPI::addDispatcherV2(PHANDLE, "plugin:hyprglot:switchxkblayout", switchLayoutDispatcher);
 
     HyprlandAPI::addNotification(PHANDLE, "[hyprglot] Initialized successfully!", CHyprColor{0.2, 1.0, 0.2, 1.0}, 5000);
 
-    return {"hyprglot", "A plugin that facilitates managing multiple keyboard languages in hyprland", "Jimmy (Yousef)", "1.0"};
+    return {"hyprglot", "A plugin that facilitates managing multiple keyboard layouts in hyprland", "Jimmy (Yousef)", "1.0"};
 }
