@@ -56,6 +56,10 @@ void switchActiveKeyboardLayout(KeyboardLayout layout) {
 }
 
 void onActiveWindow(PHLWINDOW pWindow) {
+    //No explicit warning in documentation that this may be nullptr
+    //but just to be sure
+    if (!pWindow)
+        return;
     if (globalState.contains(pWindow->m_szTitle))
         switchActiveKeyboardLayout(globalState[pWindow->m_szTitle]);
 }
