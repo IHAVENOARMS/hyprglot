@@ -6,3 +6,5 @@
 inline HANDLE                                              PHANDLE = nullptr;
 
 inline std::unordered_map<std::string, xkb_layout_index_t> globalState;
+
+typedef xkb_layout_index_t                                 KeyboardLayout;
