@@ -3,6 +3,7 @@
 #include <hyprland/src/SharedDefs.hpp>
 #include <hyprland/src/plugins/PluginAPI.hpp>
 #include <hyprland/src/devices/Keyboard.hpp>
+#include <hyprlang.hpp>
 #include <optional>
 #include <hyprland/src/Compositor.hpp>
 #include <hyprland/src/managers/input/InputManager.hpp>
@@ -56,6 +57,10 @@ void switchActiveKeyboardLayout(KeyboardLayout layout) {
 }
 
 void onActiveWindow(PHLWINDOW pWindow) {
+    static auto* const PINDEPENDANTWINDOWLAYOUTS = (Hyprlang::INT* const*)HyprlandAPI::getConfigValue(PHANDLE, "plugin:hyprglot:independant_window_layouts");
+
+    if (!**PINDEPENDANTWINDOWLAYOUTS)
+        return;
     //No explicit warning in documentation that this may be nullptr
     //but just to be sure
     if (!pWindow)
@@ -105,12 +110,14 @@ APICALL EXPORT PLUGIN_DESCRIPTION_INFO PLUGIN_INIT(HANDLE handle) {
         throw std::runtime_error("[hyprglot] Version mismatch");
     }
 
-    static auto p =
+    static auto P =
         HyprlandAPI::registerCallbackDynamic(PHANDLE, "activeWindow", [&](void* self, SCallbackInfo& info, std::any data) { onActiveWindow(std::any_cast<PHLWINDOW>(data)); });
-    static auto p2 = HyprlandAPI::registerCallbackDynamic(PHANDLE, "activeLayout",
+    static auto P2 = HyprlandAPI::registerCallbackDynamic(PHANDLE, "activeLayout",
                                                           [&](void* self, SCallbackInfo& info, std::any data) { onActiveLayout(std::any_cast<std::vector<std::any>>(data)); });
 
-    auto        success = HyprlandAPI::addDispatcherV2(PHANDLE, "plugin:hyprglot:switchxkblayout", switchLayoutDispatcher);
+    HyprlandAPI::addConfigValue(PHANDLE, "plugin:hyprglot:independant_window_layouts", Hyprlang::INT{0});
+
+    auto success = HyprlandAPI::addDispatcherV2(PHANDLE, "plugin:hyprglot:switchxkblayout", switchLayoutDispatcher);
 
     HyprlandAPI::addNotification(PHANDLE, "[hyprglot] Initialized successfully!", CHyprColor{0.2, 1.0, 0.2, 1.0}, 5000);
 
